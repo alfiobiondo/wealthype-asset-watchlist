@@ -1,20 +1,22 @@
-import { useState } from 'react';
 import { AssetCard } from '../components/AssetCard/AssetCard';
 import { CategoryFilter } from '../components/CategoryFilter/CategoryFilter';
 import { EmptyState } from '../components/EmptyState/EmptyState';
 import { ErrorState } from '../components/ErrorState/ErrorState';
 import { SearchBar } from '../components/SearchBar/SearchBar';
+import { useAssetFilters } from '../features/assetFilters/useAssetFilters';
 import { useAssetCategories } from '../features/assets/hooks/useAssetCategories';
 import { useAssets } from '../features/assets/hooks/useAssets';
-import type { AssetType } from '../features/assets/types';
 import { useWatchlist } from '../features/watchlist/useWatchlist';
 import { useDebouncedValue } from '../lib/useDebouncedValue';
 
 export function DashboardPage() {
-	const [searchValue, setSearchValue] = useState('');
-	const [selectedCategory, setSelectedCategory] = useState<AssetType | 'all'>(
-		'all'
-	);
+	const {
+		searchValue,
+		setSearchValue,
+		selectedCategory,
+		setSelectedCategory,
+		resetFilters,
+	} = useAssetFilters();
 
 	const debouncedSearchValue = useDebouncedValue(searchValue, 400);
 
@@ -39,20 +41,36 @@ export function DashboardPage() {
 	});
 
 	const hasSearchValue = debouncedSearchValue.trim().length > 0;
+	const hasActiveFilters =
+		searchValue.trim().length > 0 || selectedCategory !== 'all';
 
 	return (
 		<main>
 			<h1>Asset Watchlist</h1>
 
-			<SearchBar value={searchValue} onChange={setSearchValue} />
+			<div style={{ marginBottom: '24px' }}>
+				<SearchBar value={searchValue} onChange={setSearchValue} />
 
-			{!isCategoriesLoading && !isCategoriesError && categories.length > 0 && (
-				<CategoryFilter
-					categories={categories}
-					selectedCategory={selectedCategory}
-					onSelectCategory={setSelectedCategory}
-				/>
-			)}
+				{!isCategoriesLoading &&
+					!isCategoriesError &&
+					categories.length > 0 && (
+						<div style={{ marginTop: '12px' }}>
+							<CategoryFilter
+								categories={categories}
+								selectedCategory={selectedCategory}
+								onSelectCategory={setSelectedCategory}
+							/>
+						</div>
+					)}
+
+				{hasActiveFilters && (
+					<div style={{ marginTop: '12px' }}>
+						<button type='button' onClick={resetFilters}>
+							Reset filters
+						</button>
+					</div>
+				)}
+			</div>
 
 			{isCategoriesError && (
 				<p>Unable to load asset categories. Search is still available.</p>
