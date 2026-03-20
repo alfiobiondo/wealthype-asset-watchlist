@@ -1,8 +1,9 @@
 import { mockAssets } from '../../../mocks/assets';
-import type { Asset } from '../types';
+import type { Asset, AssetType } from '../types';
 
 interface FetchAssetsParams {
 	query?: string;
+	category?: AssetType | 'all';
 	signal?: AbortSignal;
 }
 
@@ -21,21 +22,26 @@ function wait(ms: number, signal?: AbortSignal) {
 
 export async function fetchAssets({
 	query = '',
+	category = 'all',
 	signal,
 }: FetchAssetsParams): Promise<Asset[]> {
 	await wait(500, signal);
 
 	const normalizedQuery = query.trim().toLowerCase();
 
-	if (!normalizedQuery) {
-		return mockAssets;
+	if (normalizedQuery === 'error') {
+		throw new Error('Simulated API error');
 	}
 
 	return mockAssets.filter((asset) => {
-		return (
+		const matchesQuery =
+			!normalizedQuery ||
 			asset.name.toLowerCase().includes(normalizedQuery) ||
 			asset.symbol.toLowerCase().includes(normalizedQuery) ||
-			asset.type.toLowerCase().includes(normalizedQuery)
-		);
+			asset.type.toLowerCase().includes(normalizedQuery);
+
+		const matchesCategory = category === 'all' || asset.type === category;
+
+		return matchesQuery && matchesCategory;
 	});
 }

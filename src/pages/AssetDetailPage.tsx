@@ -1,18 +1,44 @@
 import { Link, useParams } from 'react-router-dom';
-import { mockAssets } from '../mocks/assets';
+import { EmptyState } from '../components/EmptyState/EmptyState';
+import { ErrorState } from '../components/ErrorState/ErrorState';
+import { useAsset } from '../features/assets/hooks/useAsset';
 import { formatCurrency, formatPercentage } from '../lib/formatters';
 
 export function AssetDetailPage() {
-	const { id } = useParams();
+	const { id = '' } = useParams();
 
-	const asset = mockAssets.find((item) => item.id === id);
+	const { data: asset, isLoading, isError, error, refetch } = useAsset({ id });
+
+	if (isLoading) {
+		return (
+			<main>
+				<p>Loading asset details...</p>
+			</main>
+		);
+	}
+
+	if (isError) {
+		return (
+			<main>
+				<ErrorState
+					title='Unable to load asset'
+					description={error instanceof Error ? error.message : 'Unknown error'}
+					onRetry={() => refetch()}
+				/>
+			</main>
+		);
+	}
 
 	if (!asset) {
 		return (
 			<main>
-				<h1>Asset not found</h1>
-				<p>The requested asset does not exist.</p>
-				<Link to='/'>Go back to dashboard</Link>
+				<EmptyState
+					title='Asset not found'
+					description='The requested asset does not exist or is no longer available.'
+				/>
+				<p>
+					<Link to='/'>Go back to dashboard</Link>
+				</p>
 			</main>
 		);
 	}
@@ -21,12 +47,13 @@ export function AssetDetailPage() {
 
 	return (
 		<main>
-			<Link to='/'>← Back to dashboard</Link>
+			<p>
+				<Link to='/'>← Back to dashboard</Link>
+			</p>
 
 			<section
 				style={{
 					display: 'block',
-					marginTop: '24px',
 				}}
 			>
 				<article
