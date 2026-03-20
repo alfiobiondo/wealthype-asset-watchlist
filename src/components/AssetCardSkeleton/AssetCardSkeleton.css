@@ -1,0 +1,31 @@
+.skeleton-card {
+	position: relative;
+	overflow: hidden;
+
+	height: 180px;
+	border-radius: 16px;
+	background-color: #e5e7eb; /* base gray */
+}
+
+/* shimmer layer */
+.skeleton-card::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(255, 255, 255, 0.6),
+		transparent
+	);
+
+	transform: translateX(-100%);
+	animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+	100% {
+		transform: translateX(100%);
+	}
+}

@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import { AssetDetailPage } from '../pages/AssetDetailPage';
-import { DashboardPage } from '../pages/DashboardPage';
-import { NotFoundPage } from '../pages/NotFoundPage';
+import { AssetDetailPage } from '../pages/AssetDetailPage/AssetDetailPage';
+import { DashboardPage } from '../pages/DashboardPage/DashboardPage';
+import { NotFoundPage } from '../pages/NotFoundPage/NotFoundPage';
 
 export const router = createBrowserRouter([
 	{

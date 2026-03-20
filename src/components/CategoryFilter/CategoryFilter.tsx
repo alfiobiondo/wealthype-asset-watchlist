@@ -13,13 +13,18 @@ export function CategoryFilter({
 	onSelectCategory,
 }: CategoryFilterProps) {
 	return (
-		<div className='category-filter' aria-label='Filter assets by category'>
+		<div
+			className='category-filter'
+			role='group'
+			aria-label='Filter assets by category'
+		>
 			<button
 				type='button'
 				className={`category-filter__button ${
 					selectedCategory === 'all' ? 'category-filter__button--active' : ''
 				}`}
 				onClick={() => onSelectCategory('all')}
+				aria-pressed={selectedCategory === 'all'}
 			>
 				All
 			</button>
@@ -34,6 +39,7 @@ export function CategoryFilter({
 							: ''
 					}`}
 					onClick={() => onSelectCategory(category)}
+					aria-pressed={selectedCategory === category}
 				>
 					{category}
 				</button>
