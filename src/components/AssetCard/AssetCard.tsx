@@ -55,6 +55,9 @@ export function AssetCard({
 				}`}
 				onClick={onToggleWatchlist}
 				aria-pressed={isInWatchlist}
+				aria-label={
+					isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'
+				}
 			>
 				{isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'}
 			</button>

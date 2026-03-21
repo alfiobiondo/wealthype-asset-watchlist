@@ -67,6 +67,9 @@ export function DashboardPage() {
 					onCategoryChange={setSelectedCategory}
 					onReset={resetFilters}
 					showReset={hasActiveFilters}
+					resultsCount={
+						!isInitialLoading && !isError ? assets.length : undefined
+					}
 				/>
 			</header>
 
@@ -107,8 +110,13 @@ export function DashboardPage() {
 					title='No assets found'
 					description={
 						hasActiveFilters
-							? 'No results matched your current filters. Try another search or category.'
+							? 'No results matched your filters.'
 							: 'No assets are currently available.'
+					}
+					action={
+						hasActiveFilters ? (
+							<button onClick={resetFilters}>Reset filters</button>
+						) : undefined
 					}
 				/>
 			)}

@@ -11,6 +11,7 @@ interface FiltersBarProps {
 	onCategoryChange: (category: AssetType | 'all') => void;
 	onReset: () => void;
 	showReset: boolean;
+	resultsCount?: number;
 }
 
 export function FiltersBar({
@@ -21,6 +22,7 @@ export function FiltersBar({
 	onCategoryChange,
 	onReset,
 	showReset,
+	resultsCount,
 }: FiltersBarProps) {
 	return (
 		<section className='filters-bar' aria-label='Asset filters'>
@@ -49,6 +51,14 @@ export function FiltersBar({
 					Reset filters
 				</button>
 			</div>
+
+			{typeof resultsCount === 'number' && (
+				<div className='filters-bar__meta'>
+					<p className='filters-bar__results' aria-live='polite'>
+						{resultsCount} {resultsCount === 1 ? 'asset' : 'assets'} found
+					</p>
+				</div>
+			)}
 		</section>
 	);
 }

@@ -16,3 +16,34 @@
 	margin: 0;
 	color: #4b5563;
 }
+
+.empty-state__action {
+	margin-top: 16px;
+}
+
+.empty-state__action button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 40px;
+	padding: 0 16px;
+	border: 1px solid #dbe1e7;
+	border-radius: 999px;
+	background: #111827;
+	color: #ffffff;
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 1;
+	cursor: pointer;
+	transition: opacity 0.2s ease, background-color 0.2s ease,
+		border-color 0.2s ease, color 0.2s ease;
+}
+
+.empty-state__action button:hover {
+	background: #1f2937;
+}
+
+.empty-state__action button:focus-visible {
+	outline: 3px solid #93c5fd;
+	outline-offset: 2px;
+}
