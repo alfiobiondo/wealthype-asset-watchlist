@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { Asset } from '../../assets/types';
 import { addToWatchlist } from '../api/addToWatchlist';
 import { fetchWatchlist } from '../api/fetchWatchlist';
 import { removeFromWatchlist } from '../api/removeFromWatchlist';
@@ -8,29 +10,26 @@ const WATCHLIST_QUERY_KEY = ['watchlist'];
 export function useWatchlist() {
 	const queryClient = useQueryClient();
 
-	const { data: watchlist = [] } = useQuery({
+	const {
+		data: watchlistAssets = [],
+		isLoading: isWatchlistLoading,
+		error: watchlistError,
+	} = useQuery({
 		queryKey: WATCHLIST_QUERY_KEY,
 		queryFn: ({ signal }) => fetchWatchlist(signal),
 	});
 
+	const watchlistIds = useMemo(() => {
+		return watchlistAssets.map((asset) => asset.id);
+	}, [watchlistAssets]);
+
 	const addMutation = useMutation({
 		mutationFn: addToWatchlist,
-		onMutate: async (assetId: string) => {
+		onMutate: async () => {
 			await queryClient.cancelQueries({ queryKey: WATCHLIST_QUERY_KEY });
 
 			const previousWatchlist =
-				queryClient.getQueryData<string[]>(WATCHLIST_QUERY_KEY) ?? [];
-
-			queryClient.setQueryData<string[]>(
-				WATCHLIST_QUERY_KEY,
-				(current = []) => {
-					if (current.includes(assetId)) {
-						return current;
-					}
-
-					return [...current, assetId];
-				}
-			);
+				queryClient.getQueryData<Asset[]>(WATCHLIST_QUERY_KEY) ?? [];
 
 			return { previousWatchlist };
 		},
@@ -42,22 +41,18 @@ export function useWatchlist() {
 				);
 			}
 		},
-		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+		onSuccess: (updatedWatchlist) => {
+			queryClient.setQueryData<Asset[]>(WATCHLIST_QUERY_KEY, updatedWatchlist);
 		},
 	});
 
 	const removeMutation = useMutation({
 		mutationFn: removeFromWatchlist,
-		onMutate: async (assetId: string) => {
+		onMutate: async () => {
 			await queryClient.cancelQueries({ queryKey: WATCHLIST_QUERY_KEY });
 
 			const previousWatchlist =
-				queryClient.getQueryData<string[]>(WATCHLIST_QUERY_KEY) ?? [];
-
-			queryClient.setQueryData<string[]>(WATCHLIST_QUERY_KEY, (current = []) =>
-				current.filter((id) => id !== assetId)
-			);
+				queryClient.getQueryData<Asset[]>(WATCHLIST_QUERY_KEY) ?? [];
 
 			return { previousWatchlist };
 		},
@@ -69,13 +64,13 @@ export function useWatchlist() {
 				);
 			}
 		},
-		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey: WATCHLIST_QUERY_KEY });
+		onSuccess: (updatedWatchlist) => {
+			queryClient.setQueryData<Asset[]>(WATCHLIST_QUERY_KEY, updatedWatchlist);
 		},
 	});
 
 	function isInWatchlist(assetId: string) {
-		return watchlist.includes(assetId);
+		return watchlistIds.includes(assetId);
 	}
 
 	function toggleWatchlist(assetId: string) {
@@ -88,10 +83,12 @@ export function useWatchlist() {
 	}
 
 	return {
-		watchlist,
+		watchlistAssets,
+		watchlistIds,
 		isInWatchlist,
 		toggleWatchlist,
-		isLoading: addMutation.isPending || removeMutation.isPending,
-		error: addMutation.error ?? removeMutation.error ?? null,
+		isLoading: isWatchlistLoading,
+		isPending: addMutation.isPending || removeMutation.isPending,
+		error: watchlistError ?? addMutation.error ?? removeMutation.error ?? null,
 	};
 }

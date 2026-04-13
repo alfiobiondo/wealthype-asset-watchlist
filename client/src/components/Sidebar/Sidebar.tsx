@@ -9,8 +9,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen }: SidebarProps) {
-	const { watchlist } = useWatchlist();
-	const savedCount = watchlist.length;
+	const { watchlistAssets } = useWatchlist();
+	const savedCount = watchlistAssets.length;
 
 	return (
 		<aside

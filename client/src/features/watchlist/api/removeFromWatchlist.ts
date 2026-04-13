@@ -1,6 +1,7 @@
+import type { Asset } from '../../assets/types';
 import { ENV } from '../../../config/env';
 
-export async function removeFromWatchlist(assetId: string): Promise<string[]> {
+export async function removeFromWatchlist(assetId: string): Promise<Asset[]> {
 	const response = await fetch(`${ENV.API_BASE_URL}/api/watchlist/${assetId}`, {
 		method: 'DELETE',
 	});
@@ -12,7 +13,7 @@ export async function removeFromWatchlist(assetId: string): Promise<string[]> {
 		);
 	}
 
-	const data: string[] = await response.json();
+	const data: Asset[] = await response.json();
 
 	return data;
 }

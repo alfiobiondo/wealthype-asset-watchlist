@@ -1,6 +1,7 @@
+import type { Asset } from '../../assets/types';
 import { ENV } from '../../../config/env';
 
-export async function addToWatchlist(assetId: string): Promise<string[]> {
+export async function addToWatchlist(assetId: string): Promise<Asset[]> {
 	const response = await fetch(`${ENV.API_BASE_URL}/api/watchlist/${assetId}`, {
 		method: 'POST',
 	});
@@ -10,7 +11,7 @@ export async function addToWatchlist(assetId: string): Promise<string[]> {
 		throw new Error(errorData?.message ?? 'Failed to add asset to watchlist');
 	}
 
-	const data: string[] = await response.json();
+	const data: Asset[] = await response.json();
 
 	return data;
 }

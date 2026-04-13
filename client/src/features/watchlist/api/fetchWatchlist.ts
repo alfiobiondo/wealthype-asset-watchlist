@@ -1,6 +1,7 @@
+import type { Asset } from '../../assets/types';
 import { ENV } from '../../../config/env';
 
-export async function fetchWatchlist(signal?: AbortSignal): Promise<string[]> {
+export async function fetchWatchlist(signal?: AbortSignal): Promise<Asset[]> {
 	const response = await fetch(`${ENV.API_BASE_URL}/api/watchlist`, {
 		signal,
 	});
@@ -9,7 +10,7 @@ export async function fetchWatchlist(signal?: AbortSignal): Promise<string[]> {
 		throw new Error('Failed to fetch watchlist');
 	}
 
-	const data: string[] = await response.json();
+	const data: Asset[] = await response.json();
 
 	return data;
 }

@@ -15,7 +15,7 @@ export function AssetCard({
 	isInWatchlist,
 	onToggleWatchlist,
 }: AssetCardProps) {
-	const { isLoading } = useWatchlist();
+	const { isPending } = useWatchlist();
 	const isPositive = asset.changePercent >= 0;
 
 	return (
@@ -56,7 +56,7 @@ export function AssetCard({
 					isInWatchlist ? 'asset-card__watchlist-button--active' : ''
 				}`}
 				onClick={onToggleWatchlist}
-				disabled={isLoading}
+				disabled={isPending}
 				aria-pressed={isInWatchlist}
 				aria-label={
 					isInWatchlist ? 'Remove from watchlist' : 'Add to watchlist'
