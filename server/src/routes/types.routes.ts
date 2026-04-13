@@ -3,8 +3,8 @@ import { getAssetTypes } from '../services/assets.service';
 
 export const assetTypesRouter = Router();
 
-assetTypesRouter.get('/', (_req, res) => {
-	const types = getAssetTypes();
+assetTypesRouter.get('/', async (_req, res) => {
+	const types = await getAssetTypes();
 
 	res.status(200).json(types);
 });

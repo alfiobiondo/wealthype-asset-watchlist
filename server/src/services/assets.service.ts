@@ -1,4 +1,8 @@
-import { assets } from '../data/assets';
+import {
+	AssetType as PrismaAssetType,
+	type Asset as PrismaAsset,
+} from '@prisma/client';
+import { prisma } from '../lib/prisma';
 import type { Asset, AssetType } from '../types/asset';
 
 export interface GetAssetsFilters {
@@ -6,33 +10,85 @@ export interface GetAssetsFilters {
 	type?: string;
 }
 
-export function getAssets(filters: GetAssetsFilters = {}): Asset[] {
+function mapPrismaAssetType(type: PrismaAssetType): AssetType {
+	switch (type) {
+		case 'STOCK':
+			return 'stock';
+		case 'ETF':
+			return 'etf';
+		case 'CRYPTO':
+			return 'crypto';
+	}
+}
+
+function mapAsset(record: PrismaAsset): Asset {
+	return {
+		id: record.id,
+		symbol: record.symbol,
+		name: record.name,
+		price: Number(record.price),
+		changePercent: Number(record.changePercent),
+		description: record.description ?? '',
+		type: mapPrismaAssetType(record.type),
+	};
+}
+
+export async function getAssets(
+	filters: GetAssetsFilters = {}
+): Promise<Asset[]> {
 	const { search, type } = filters;
 
-	let result = [...assets];
+	const result = await prisma.asset.findMany({
+		where: {
+			...(search
+				? {
+						OR: [
+							{
+								name: {
+									contains: search,
+									mode: 'insensitive',
+								},
+							},
+							{
+								symbol: {
+									contains: search,
+									mode: 'insensitive',
+								},
+							},
+						],
+				  }
+				: {}),
+			...(type
+				? {
+						type: type.toUpperCase() as PrismaAssetType,
+				  }
+				: {}),
+		},
+		orderBy: {
+			name: 'asc',
+		},
+	});
 
-	if (search) {
-		const normalizedSearch = search.trim().toLowerCase();
-
-		result = result.filter((asset) => {
-			return (
-				asset.name.toLowerCase().includes(normalizedSearch) ||
-				asset.symbol.toLowerCase().includes(normalizedSearch)
-			);
-		});
-	}
-
-	if (type) {
-		result = result.filter((asset) => asset.type === type);
-	}
-
-	return result;
+	return result.map(mapAsset);
 }
 
-export function getAssetById(id: string): Asset | undefined {
-	return assets.find((asset) => asset.id === id);
+export async function getAssetById(id: string): Promise<Asset | undefined> {
+	const asset = await prisma.asset.findUnique({
+		where: { id },
+	});
+
+	if (!asset) {
+		return undefined;
+	}
+
+	return mapAsset(asset);
 }
 
-export function getAssetTypes(): AssetType[] {
-	return Array.from(new Set(assets.map((asset) => asset.type)));
+export async function getAssetTypes(): Promise<AssetType[]> {
+	const types = await prisma.asset.findMany({
+		select: { type: true },
+		distinct: ['type'],
+	});
+
+	return types.map((item) => mapPrismaAssetType(item.type));
 }

@@ -7,15 +7,15 @@ import {
 
 export const watchlistRouter = Router();
 
-watchlistRouter.get('/', (_req, res) => {
-	const data = getWatchlist();
+watchlistRouter.get('/', async (_req, res) => {
+	const data = await getWatchlist();
 	res.status(200).json(data);
 });
 
-watchlistRouter.post('/:assetId', (req, res) => {
+watchlistRouter.post('/:assetId', async (req, res) => {
 	const { assetId } = req.params;
 
-	const result = addToWatchlist(assetId);
+	const result = await addToWatchlist(assetId);
 
 	if (!result.success) {
 		return res.status(result.status).json({ message: result.message });
@@ -24,10 +24,10 @@ watchlistRouter.post('/:assetId', (req, res) => {
 	res.status(200).json(result.data);
 });
 
-watchlistRouter.delete('/:assetId', (req, res) => {
+watchlistRouter.delete('/:assetId', async (req, res) => {
 	const { assetId } = req.params;
 
-	const result = removeFromWatchlist(assetId);
+	const result = await removeFromWatchlist(assetId);
 
 	if (!result.success) {
 		return res.status(result.status).json({ message: result.message });

@@ -1,12 +1,43 @@
-import { watchlist } from '../data/watchlist';
-import { getAssetById } from './assets.service';
+import { prisma } from '../lib/prisma';
 
-export function getWatchlist() {
-	return watchlist;
+const DEMO_USER_EMAIL = 'demo@wealthype.local';
+
+async function getDemoUser() {
+	return prisma.user.upsert({
+		where: { email: DEMO_USER_EMAIL },
+		update: {},
+		create: {
+			email: DEMO_USER_EMAIL,
+			passwordHash: 'demo-password-not-used',
+			name: 'Demo User',
+		},
+	});
 }
 
-export function addToWatchlist(assetId: string) {
-	const asset = getAssetById(assetId);
+export async function getWatchlist(): Promise<string[]> {
+	const user = await getDemoUser();
+
+	const items = await prisma.watchlistItem.findMany({
+		where: {
+			userId: user.id,
+		},
+		select: {
+			assetId: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
+
+	return items.map((item) => item.assetId);
+}
+
+export async function addToWatchlist(assetId: string) {
+	const user = await getDemoUser();
+
+	const asset = await prisma.asset.findUnique({
+		where: { id: assetId },
+	});
 
 	if (!asset) {
 		return {
@@ -16,7 +47,16 @@ export function addToWatchlist(assetId: string) {
 		};
 	}
 
-	if (watchlist.includes(assetId)) {
+	const existing = await prisma.watchlistItem.findUnique({
+		where: {
+			userId_assetId: {
+				userId: user.id,
+				assetId,
+			},
+		},
+	});
+
+	if (existing) {
 		return {
 			success: false as const,
 			status: 409,
@@ -24,18 +64,44 @@ export function addToWatchlist(assetId: string) {
 		};
 	}
 
-	watchlist.push(assetId);
+	await prisma.watchlistItem.create({
+		data: {
+			userId: user.id,
+			assetId,
+		},
+	});
+
+	const updated = await prisma.watchlistItem.findMany({
+		where: {
+			userId: user.id,
+		},
+		select: {
+			assetId: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
 
 	return {
 		success: true as const,
-		data: watchlist,
+		data: updated.map((item) => item.assetId),
 	};
 }
 
-export function removeFromWatchlist(assetId: string) {
-	const index = watchlist.indexOf(assetId);
+export async function removeFromWatchlist(assetId: string) {
+	const user = await getDemoUser();
 
-	if (index === -1) {
+	const existing = await prisma.watchlistItem.findUnique({
+		where: {
+			userId_assetId: {
+				userId: user.id,
+				assetId,
+			},
+		},
+	});
+
+	if (!existing) {
 		return {
 			success: false as const,
 			status: 404,
@@ -43,10 +109,29 @@ export function removeFromWatchlist(assetId: string) {
 		};
 	}
 
-	watchlist.splice(index, 1);
+	await prisma.watchlistItem.delete({
+		where: {
+			userId_assetId: {
+				userId: user.id,
+				assetId,
+			},
+		},
+	});
+
+	const updated = await prisma.watchlistItem.findMany({
+		where: {
+			userId: user.id,
+		},
+		select: {
+			assetId: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	});
 
 	return {
 		success: true as const,
-		data: watchlist,
+		data: updated.map((item) => item.assetId),
 	};
 }

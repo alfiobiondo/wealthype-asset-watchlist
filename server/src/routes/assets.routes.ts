@@ -3,7 +3,7 @@ import { getAssetById, getAssets } from '../services/assets.service';
 
 export const assetsRouter = Router();
 
-assetsRouter.get('/', (req, res) => {
+assetsRouter.get('/', async (req, res) => {
 	const search =
 		typeof req.query.search === 'string'
 			? req.query.search
@@ -13,15 +13,15 @@ assetsRouter.get('/', (req, res) => {
 
 	const type = typeof req.query.type === 'string' ? req.query.type : undefined;
 
-	const result = getAssets({ search, type });
+	const result = await getAssets({ search, type });
 
 	res.status(200).json(result);
 });
 
-assetsRouter.get('/:id', (req, res) => {
+assetsRouter.get('/:id', async (req, res) => {
 	const { id } = req.params;
 
-	const asset = getAssetById(id);
+	const asset = await getAssetById(id);
 
 	if (!asset) {
 		return res.status(404).json({
