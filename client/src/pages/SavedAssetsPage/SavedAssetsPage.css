@@ -1,0 +1,19 @@
+.saved-assets-page__summary {
+	margin-bottom: 1.5rem;
+}
+
+.saved-assets-page__count {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.625rem 1rem;
+	border-radius: 999px;
+	background-color: #f1f5f9;
+	font-weight: 600;
+	color: #334155;
+}
+
+.saved-assets-page__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.5rem;
+}

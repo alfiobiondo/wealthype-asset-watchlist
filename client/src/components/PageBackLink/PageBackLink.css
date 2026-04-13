@@ -1,0 +1,46 @@
+.page-back-link__wrapper {
+	margin: 0;
+}
+
+.page-back-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 0 16px;
+	border-radius: 999px;
+	border: 1px solid #dbe1e7;
+	background: #f8fafc;
+	color: #111827;
+	font-size: 0.95rem;
+	font-weight: 600;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background-color 0.2s ease, border-color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.page-back-link:hover {
+	background: #f1f5f9;
+	border-color: #c5ced8;
+}
+
+.page-back-link:active {
+	transform: translateY(1px);
+}
+
+.page-back-link:focus-visible {
+	outline: 3px solid #93c5fd;
+	outline-offset: 2px;
+}
+
+.page-back-link__icon {
+	font-size: 1rem;
+	line-height: 1;
+	transition: transform 0.2s ease;
+}
+
+.page-back-link:hover .page-back-link__icon {
+	transform: translateX(-2px);
+}
