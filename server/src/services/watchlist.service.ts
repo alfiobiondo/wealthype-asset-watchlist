@@ -1,4 +1,6 @@
+import type { Asset } from '../types/asset';
 import { prisma } from '../lib/prisma';
+import { mapAsset } from './assets.service';
 
 const DEMO_USER_EMAIL = 'demo@wealthype.local';
 
@@ -14,22 +16,25 @@ async function getDemoUser() {
 	});
 }
 
-export async function getWatchlist(): Promise<string[]> {
-	const user = await getDemoUser();
-
+async function getWatchlistAssetsByUserId(userId: string): Promise<Asset[]> {
 	const items = await prisma.watchlistItem.findMany({
 		where: {
-			userId: user.id,
+			userId,
 		},
-		select: {
-			assetId: true,
+		include: {
+			asset: true,
 		},
 		orderBy: {
 			createdAt: 'desc',
 		},
 	});
 
-	return items.map((item) => item.assetId);
+	return items.map((item) => mapAsset(item.asset));
+}
+
+export async function getWatchlist(): Promise<Asset[]> {
+	const user = await getDemoUser();
+	return getWatchlistAssetsByUserId(user.id);
 }
 
 export async function addToWatchlist(assetId: string) {
@@ -71,21 +76,9 @@ export async function addToWatchlist(assetId: string) {
 		},
 	});
 
-	const updated = await prisma.watchlistItem.findMany({
-		where: {
-			userId: user.id,
-		},
-		select: {
-			assetId: true,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	});
-
 	return {
 		success: true as const,
-		data: updated.map((item) => item.assetId),
+		data: await getWatchlistAssetsByUserId(user.id),
 	};
 }
 
@@ -118,20 +111,8 @@ export async function removeFromWatchlist(assetId: string) {
 		},
 	});
 
-	const updated = await prisma.watchlistItem.findMany({
-		where: {
-			userId: user.id,
-		},
-		select: {
-			assetId: true,
-		},
-		orderBy: {
-			createdAt: 'desc',
-		},
-	});
-
 	return {
 		success: true as const,
-		data: updated.map((item) => item.assetId),
+		data: await getWatchlistAssetsByUserId(user.id),
 	};
 }

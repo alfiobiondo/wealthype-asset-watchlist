@@ -10,7 +10,7 @@ export interface GetAssetsFilters {
 	type?: string;
 }
 
-function mapPrismaAssetType(type: PrismaAssetType): AssetType {
+export function mapPrismaAssetType(type: PrismaAssetType): AssetType {
 	switch (type) {
 		case 'STOCK':
 			return 'stock';
@@ -21,7 +21,7 @@ function mapPrismaAssetType(type: PrismaAssetType): AssetType {
 	}
 }
 
-function mapAsset(record: PrismaAsset): Asset {
+export function mapAsset(record: PrismaAsset): Asset {
 	return {
 		id: record.id,
 		symbol: record.symbol,
