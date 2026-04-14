@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import type { AssetType } from '../assets/types';
+import type { AssetType } from '../../assets/types';
 import {
 	getStoredCategory,
 	getStoredSearchValue,
 	setStoredCategory,
 	setStoredSearchValue,
-} from './assetFilters.storage';
+} from '../lib/assetFilters.storage';
 
 export function useAssetFilters() {
 	const [searchValue, setSearchValue] = useState(() => getStoredSearchValue());

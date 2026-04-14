@@ -1,5 +1,6 @@
 import type { Asset, AssetType } from '../types';
 import { ENV } from '../../../config/env';
+import { apiClient } from '../../../lib/apiClient';
 
 interface FetchAssetsParams {
 	query?: string;
@@ -28,7 +29,7 @@ export async function fetchAssets({
 		params.set('type', category);
 	}
 
-	const response = await fetch(
+	const response = await apiClient(
 		`${ENV.API_BASE_URL}/api/asset?${params.toString()}`,
 		{
 			signal,

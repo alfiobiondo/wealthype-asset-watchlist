@@ -2,20 +2,6 @@ import type { Asset } from '../types/asset';
 import { prisma } from '../lib/prisma';
 import { mapAsset } from './assets.service';
 
-const DEMO_USER_EMAIL = 'demo@wealthype.local';
-
-async function getDemoUser() {
-	return prisma.user.upsert({
-		where: { email: DEMO_USER_EMAIL },
-		update: {},
-		create: {
-			email: DEMO_USER_EMAIL,
-			passwordHash: 'demo-password-not-used',
-			name: 'Demo User',
-		},
-	});
-}
-
 async function getWatchlistAssetsByUserId(userId: string): Promise<Asset[]> {
 	const items = await prisma.watchlistItem.findMany({
 		where: {
@@ -32,14 +18,11 @@ async function getWatchlistAssetsByUserId(userId: string): Promise<Asset[]> {
 	return items.map((item) => mapAsset(item.asset));
 }
 
-export async function getWatchlist(): Promise<Asset[]> {
-	const user = await getDemoUser();
-	return getWatchlistAssetsByUserId(user.id);
+export async function getWatchlist(userId: string): Promise<Asset[]> {
+	return getWatchlistAssetsByUserId(userId);
 }
 
-export async function addToWatchlist(assetId: string) {
-	const user = await getDemoUser();
-
+export async function addToWatchlist(userId: string, assetId: string) {
 	const asset = await prisma.asset.findUnique({
 		where: { id: assetId },
 	});
@@ -55,7 +38,7 @@ export async function addToWatchlist(assetId: string) {
 	const existing = await prisma.watchlistItem.findUnique({
 		where: {
 			userId_assetId: {
-				userId: user.id,
+				userId,
 				assetId,
 			},
 		},
@@ -71,24 +54,22 @@ export async function addToWatchlist(assetId: string) {
 
 	await prisma.watchlistItem.create({
 		data: {
-			userId: user.id,
+			userId,
 			assetId,
 		},
 	});
 
 	return {
 		success: true as const,
-		data: await getWatchlistAssetsByUserId(user.id),
+		data: await getWatchlistAssetsByUserId(userId),
 	};
 }
 
-export async function removeFromWatchlist(assetId: string) {
-	const user = await getDemoUser();
-
+export async function removeFromWatchlist(userId: string, assetId: string) {
 	const existing = await prisma.watchlistItem.findUnique({
 		where: {
 			userId_assetId: {
-				userId: user.id,
+				userId,
 				assetId,
 			},
 		},
@@ -105,7 +86,7 @@ export async function removeFromWatchlist(assetId: string) {
 	await prisma.watchlistItem.delete({
 		where: {
 			userId_assetId: {
-				userId: user.id,
+				userId,
 				assetId,
 			},
 		},
@@ -113,6 +94,6 @@ export async function removeFromWatchlist(assetId: string) {
 
 	return {
 		success: true as const,
-		data: await getWatchlistAssetsByUserId(user.id),
+		data: await getWatchlistAssetsByUserId(userId),
 	};
 }

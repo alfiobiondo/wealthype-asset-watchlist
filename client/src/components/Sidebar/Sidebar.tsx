@@ -1,7 +1,10 @@
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { NavLink } from 'react-router-dom';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
+import { useAuth } from '../../features/auth/hooks/useAuth';
+import { useCurrentUser } from '../../features/auth/hooks/useCurrentUser';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -10,6 +13,9 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen }: SidebarProps) {
 	const { watchlistAssets } = useWatchlist();
+	const { logout } = useAuth();
+	const user = useCurrentUser();
+
 	const savedCount = watchlistAssets.length;
 
 	return (
@@ -31,7 +37,6 @@ export function Sidebar({ isOpen }: SidebarProps) {
 					) : null}
 				</div>
 			</div>
-
 			<nav className='sidebar__nav'>
 				<NavLink
 					to='/'
@@ -69,6 +74,30 @@ export function Sidebar({ isOpen }: SidebarProps) {
 					) : null}
 				</NavLink>
 			</nav>
+			<div className='sidebar__footer'>
+				<div className='sidebar__account'>
+					<div className='sidebar__account-block'>
+						<div className='sidebar__account-avatar'>
+							{user?.userId?.slice(0, 1).toUpperCase() ?? 'U'}
+						</div>
+					</div>
+
+					{isOpen ? (
+						<div className='sidebar__account-copy'>
+							<span className='sidebar__account-label'>Signed in</span>
+							<span className='sidebar__account-id'>{user?.userId}</span>
+						</div>
+					) : null}
+				</div>
+
+				<button className='sidebar__logout' onClick={logout}>
+					<span className='sidebar__icon' aria-hidden='true'>
+						<LogoutRoundedIcon fontSize='small' />
+					</span>
+
+					{isOpen && <span>Log out</span>}
+				</button>
+			</div>
 		</aside>
 	);
 }

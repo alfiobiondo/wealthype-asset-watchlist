@@ -1,8 +1,9 @@
 import type { Asset } from '../../assets/types';
 import { ENV } from '../../../config/env';
+import { apiClient } from '../../../lib/apiClient';
 
 export async function fetchWatchlist(signal?: AbortSignal): Promise<Asset[]> {
-	const response = await fetch(`${ENV.API_BASE_URL}/api/watchlist`, {
+	const response = await apiClient(`${ENV.API_BASE_URL}/api/watchlist`, {
 		signal,
 	});
 

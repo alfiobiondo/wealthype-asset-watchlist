@@ -5,7 +5,7 @@ import { ErrorState } from '../../components/ErrorState/ErrorState';
 import { FiltersBar } from '../../components/FiltersBar/FiltersBar';
 import { PageHeader } from '../../components/PageHeader/PageHeader';
 import { Spinner } from '../../components/Spinner/Spinner';
-import { useAssetFilters } from '../../features/assetFilters/useAssetFilters';
+import { useAssetFilters } from '../../features/assetFilters/hooks/useAssetFilters';
 import { useAssetCategories } from '../../features/assets/hooks/useAssetCategories';
 import { useAssets } from '../../features/assets/hooks/useAssets';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
