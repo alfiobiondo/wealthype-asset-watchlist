@@ -2,7 +2,7 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
-	color: #4b5563;
+	color: var(--color-text-secondary);
 	font-size: 0.95rem;
 }
 
@@ -14,11 +14,11 @@
 .asset-detail-card {
 	width: 100%;
 	max-width: 960px;
-	background: white;
-	border: 1px solid #e5e7eb;
-	border-radius: 20px;
+	background: var(--color-surface-primary);
+	border: 1px solid var(--color-border-default);
+	border-radius: var(--radius-lg);
 	padding: 24px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+	box-shadow: var(--shadow-lg);
 }
 
 .asset-detail-card--status {
@@ -31,7 +31,7 @@
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .asset-detail-card__header {
@@ -48,7 +48,7 @@
 	font-weight: 700;
 	letter-spacing: 0.06em;
 	text-transform: uppercase;
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .asset-detail-card__title {
@@ -57,7 +57,7 @@
 	line-height: 1.1;
 	font-weight: 700;
 	letter-spacing: -0.02em;
-	color: #111827;
+	color: var(--color-text-primary);
 }
 
 .asset-detail-card__type {
@@ -66,9 +66,9 @@
 	justify-content: center;
 	min-height: 32px;
 	padding: 0 12px;
-	border-radius: 999px;
-	background: #eef2ff;
-	color: #4f46e5;
+	border-radius: var(--radius-pill);
+	background: var(--color-brand-accent-soft);
+	color: var(--color-brand-accent-strong);
 	font-size: 0.8rem;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -85,9 +85,9 @@
 
 .asset-detail-card__metric {
 	padding: 16px;
-	border-radius: 16px;
-	background: #f9fafb;
-	border: 1px solid #f3f4f6;
+	border-radius: var(--radius-md);
+	background: var(--color-bg-app);
+	border: 1px solid var(--color-surface-tertiary);
 }
 
 .asset-detail-card__label {
@@ -96,7 +96,7 @@
 	font-weight: 700;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .asset-detail-card__price {
@@ -104,7 +104,7 @@
 	font-size: 2rem;
 	font-weight: 700;
 	letter-spacing: -0.02em;
-	color: #111827;
+	color: var(--color-text-primary);
 }
 
 .asset-detail-card__change {
@@ -114,11 +114,11 @@
 }
 
 .asset-detail-card__change--positive {
-	color: #15803d;
+	color: var(--color-feedback-success);
 }
 
 .asset-detail-card__change--negative {
-	color: #b91c1c;
+	color: var(--color-feedback-danger);
 }
 
 .asset-detail-card__section {
@@ -129,20 +129,20 @@
 	margin: 0;
 	font-size: 1rem;
 	line-height: 1.6;
-	color: #374151;
+	color: var(--color-text-tertiary);
 }
 
 .asset-detail-card__description--status {
 	max-width: 560px;
 	font-size: 1.1rem;
 	line-height: 1.7;
-	color: #4b5563;
+	color: var(--color-text-secondary);
 }
 
 @media (max-width: 640px) {
 	.asset-detail-card {
 		padding: 20px;
-		border-radius: 16px;
+		border-radius: var(--radius-md);
 	}
 
 	.asset-detail-card__header {

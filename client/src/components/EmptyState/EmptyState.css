@@ -1,20 +1,20 @@
 .empty-state {
 	padding: 32px 20px;
-	border: 1px dashed #cbd5e1;
-	border-radius: 16px;
-	background: #ffffff;
+	border: 1px dashed var(--color-border-dashed);
+	border-radius: var(--radius-md);
+	background: var(--color-surface-primary);
 	text-align: center;
 }
 
 .empty-state__title {
 	margin: 0 0 8px;
 	font-size: 1.25rem;
-	color: #111827;
+	color: var(--color-text-primary);
 }
 
 .empty-state__description {
 	margin: 0;
-	color: #4b5563;
+	color: var(--color-text-secondary);
 }
 
 .empty-state__action {
@@ -27,10 +27,10 @@
 	justify-content: center;
 	min-height: 40px;
 	padding: 0 16px;
-	border: 1px solid #dbe1e7;
-	border-radius: 999px;
-	background: #111827;
-	color: #ffffff;
+	border: 1px solid var(--color-border-muted);
+	border-radius: var(--radius-pill);
+	background: var(--color-brand-primary);
+	color: var(--color-text-inverse);
 	font-size: 0.95rem;
 	font-weight: 600;
 	line-height: 1;
@@ -40,10 +40,10 @@
 }
 
 .empty-state__action button:hover {
-	background: #1f2937;
+	background: var(--color-brand-primary-hover);
 }
 
 .empty-state__action button:focus-visible {
-	outline: 3px solid #93c5fd;
+	outline: 3px solid var(--color-focus-ring);
 	outline-offset: 2px;
 }

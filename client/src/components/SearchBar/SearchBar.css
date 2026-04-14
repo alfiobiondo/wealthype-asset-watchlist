@@ -10,25 +10,25 @@
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .search-bar__input {
 	width: 100%;
 	min-height: 48px;
 	padding: 12px 14px;
-	border: 1px solid #d1d5db;
-	border-radius: 12px;
+	border: 1px solid var(--color-border-strong);
+	border-radius: var(--radius-sm);
 	font-size: 1rem;
-	background: white;
-	color: #111827;
+	background: var(--color-surface-primary);
+	color: var(--color-text-primary);
 }
 
 .search-bar__input::placeholder {
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .search-bar__input:focus-visible {
-	outline: 3px solid #93c5fd;
+	outline: 3px solid var(--color-focus-ring);
 	outline-offset: 2px;
 }

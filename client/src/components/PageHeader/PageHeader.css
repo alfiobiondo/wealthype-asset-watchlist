@@ -16,7 +16,7 @@
 	font-weight: 700;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
-	color: #6b7280;
+	color: var(--color-text-muted);
 }
 
 .page-header__title {
@@ -25,14 +25,14 @@
 	font-weight: 700;
 	line-height: 1.1;
 	letter-spacing: -0.02em;
-	color: #111827;
+	color: var(--color-text-primary);
 }
 
 .page-header__subtitle {
 	margin: 8px 0 0;
 	font-size: 0.95rem;
 	line-height: 1.5;
-	color: #4b5563;
+	color: var(--color-text-secondary);
 	max-width: 640px;
 }
 

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../features/auth/hooks/useAuth';
 import './LoginPage.css';
+import { Spinner } from '../../components/Spinner/Spinner';
 
 export function LoginPage() {
 	const { login, isLoading, error } = useAuth();
@@ -65,7 +66,14 @@ export function LoginPage() {
 						type='submit'
 						disabled={isLoading}
 					>
-						{isLoading ? 'Logging in...' : 'Log in'}
+						{isLoading ? (
+							<span className='auth-card__submit-content'>
+								<Spinner />
+								<span>Logging in...</span>
+							</span>
+						) : (
+							'Log in'
+						)}
 					</button>
 
 					{error ? (

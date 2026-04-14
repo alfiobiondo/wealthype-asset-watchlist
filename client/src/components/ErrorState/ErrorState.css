@@ -1,8 +1,8 @@
 .error-state {
 	padding: 24px;
-	border: 1px solid #fecaca;
-	border-radius: 16px;
-	background: #fff7f7;
+	border: 1px solid var(--color-feedback-danger-border);
+	border-radius: var(--radius-md);
+	background: var(--color-feedback-danger-soft);
 	text-align: left;
 }
 
@@ -11,14 +11,14 @@
 	font-size: 1.25rem;
 	font-weight: 700;
 	line-height: 1.2;
-	color: #991b1b;
+	color: var(--color-feedback-danger-strong);
 }
 
 .error-state__description {
 	margin: 0 0 16px;
 	font-size: 1rem;
 	line-height: 1.6;
-	color: #7f1d1d;
+	color: var(--color-feedback-danger-text);
 }
 
 .error-state__button {
@@ -27,10 +27,10 @@
 	justify-content: center;
 	min-height: 40px;
 	padding: 0 14px;
-	border: 1px solid #f3b5b5;
-	border-radius: 999px;
-	background: white;
-	color: #991b1b;
+	border: 1px solid var(--color-border-danger-soft);
+	border-radius: var(--radius-pill);
+	background: var(--color-surface-primary);
+	color: var(--color-feedback-danger-strong);
 	font-size: 0.95rem;
 	font-weight: 600;
 	cursor: pointer;
@@ -39,8 +39,8 @@
 }
 
 .error-state__button:hover {
-	background: #fef2f2;
-	border-color: #dc2626;
+	background: var(--color-feedback-danger-softer);
+	border-color: var(--color-feedback-danger-accent);
 }
 
 .error-state__button:active {
@@ -48,6 +48,6 @@
 }
 
 .error-state__button:focus-visible {
-	outline: 3px solid #fca5a5;
+	outline: 3px solid var(--color-feedback-danger-focus);
 	outline-offset: 2px;
 }

@@ -9,10 +9,10 @@
 	gap: 8px;
 	min-height: 44px;
 	padding: 0 16px;
-	border-radius: 999px;
-	border: 1px solid #dbe1e7;
-	background: #f8fafc;
-	color: #111827;
+	border-radius: var(--radius-pill);
+	border: 1px solid var(--color-border-muted);
+	background: var(--color-surface-secondary);
+	color: var(--color-text-primary);
 	font-size: 0.95rem;
 	font-weight: 600;
 	text-decoration: none;
@@ -22,8 +22,8 @@
 }
 
 .page-back-link:hover {
-	background: #f1f5f9;
-	border-color: #c5ced8;
+	background: var(--color-surface-tertiary);
+	border-color: var(--color-border-strong);
 }
 
 .page-back-link:active {
@@ -31,7 +31,7 @@
 }
 
 .page-back-link:focus-visible {
-	outline: 3px solid #93c5fd;
+	outline: 3px solid var(--color-focus-ring);
 	outline-offset: 2px;
 }
 

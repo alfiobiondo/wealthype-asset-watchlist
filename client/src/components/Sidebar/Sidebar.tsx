@@ -1,10 +1,13 @@
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import { NavLink } from 'react-router-dom';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
 import { useAuth } from '../../features/auth/hooks/useAuth';
 import { useCurrentUser } from '../../features/auth/hooks/useCurrentUser';
+import { useTheme } from '../../theme/useTheme';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -14,6 +17,7 @@ interface SidebarProps {
 export function Sidebar({ isOpen }: SidebarProps) {
 	const { watchlistAssets } = useWatchlist();
 	const { logout } = useAuth();
+	const { theme, toggleTheme } = useTheme();
 	const { data, isLoading } = useCurrentUser();
 
 	const user = data?.user;
@@ -21,6 +25,8 @@ export function Sidebar({ isOpen }: SidebarProps) {
 
 	const displayName = user?.name || user?.email || 'User';
 	const avatarLetter = displayName?.[0]?.toUpperCase() ?? 'U';
+
+	const isDark = theme === 'dark';
 
 	return (
 		<aside
@@ -105,12 +111,30 @@ export function Sidebar({ isOpen }: SidebarProps) {
 					) : null}
 				</div>
 
-				<button className='sidebar__logout' onClick={logout}>
+				<button type='button' className='sidebar__logout' onClick={logout}>
 					<span className='sidebar__icon' aria-hidden='true'>
 						<LogoutRoundedIcon fontSize='small' />
 					</span>
 
 					{isOpen && <span>Log out</span>}
+				</button>
+
+				<button
+					type='button'
+					className='sidebar__theme-toggle'
+					onClick={toggleTheme}
+					aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+					aria-pressed={isDark}
+				>
+					<span className='sidebar__icon' aria-hidden='true'>
+						{isDark ? (
+							<LightModeRoundedIcon fontSize='small' />
+						) : (
+							<DarkModeRoundedIcon fontSize='small' />
+						)}
+					</span>
+
+					{isOpen && <span>{isDark ? 'Light mode' : 'Dark mode'}</span>}
 				</button>
 			</div>
 		</aside>
