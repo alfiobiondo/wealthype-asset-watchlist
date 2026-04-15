@@ -5,21 +5,33 @@ import { components } from './components';
 import { typography } from './typography';
 import { radius } from '../config/radius';
 import { spacing } from '../config/spacing';
+import { shadows } from '../config/shadows';
+import { colorSchemes } from '../config/colors';
 import { getMuiShadows } from './shadows';
 
-function toNumber(px: string) {
-	return Number.parseInt(px.replace('px', ''), 10);
+function pxToNumber(value: string) {
+	return Number.parseInt(value.replace('px', ''), 10);
 }
 
 export function createAppMuiTheme(mode: ThemeMode) {
+	const colors = colorSchemes[mode];
+
 	return createTheme({
 		palette: getPalette(mode),
 		shape: {
-			borderRadius: toNumber(radius.md),
+			borderRadius: pxToNumber(radius.md),
 		},
-		spacing: toNumber(spacing.sm),
+		spacing: pxToNumber(spacing.sm),
 		shadows: getMuiShadows(),
 		typography,
 		components,
+		tokens: {
+			radius,
+			spacing,
+			shadows,
+			gradients: {
+				brand: colors.gradient.brand,
+			},
+		},
 	});
 }

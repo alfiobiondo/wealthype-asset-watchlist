@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import './EmptyState.css';
+import { Box, Typography } from '@mui/material';
 
 interface EmptyStateProps {
 	title: string;
@@ -9,11 +9,34 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description, action }: EmptyStateProps) {
 	return (
-		<div className='empty-state' role='status' aria-live='polite'>
-			<h2 className='empty-state__title'>{title}</h2>
-			<p className='empty-state__description'>{description}</p>
+		<Box
+			role='status'
+			aria-live='polite'
+			sx={(theme) => ({
+				px: 2.5,
+				py: 4,
+				border: `1px dashed ${theme.palette.border.dashed}`,
+				borderRadius: theme.tokens.radius.md,
+				backgroundColor: theme.palette.background.paper,
+				textAlign: 'center',
+			})}
+		>
+			<Typography
+				variant='h3'
+				component='h2'
+				sx={{
+					mb: 1,
+					fontSize: '1.25rem',
+				}}
+			>
+				{title}
+			</Typography>
 
-			{action ? <div className='empty-state__action'>{action}</div> : null}
-		</div>
+			<Typography variant='body2' color='text.secondary'>
+				{description}
+			</Typography>
+
+			{action ? <Box sx={{ mt: 2 }}>{action}</Box> : null}
+		</Box>
 	);
 }

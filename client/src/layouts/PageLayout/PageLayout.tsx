@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
+import { Box, Stack } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader/PageHeader';
 import { PageBackLink } from '../../components/PageBackLink/PageBackLink';
-import './PageLayout.css';
 
 interface PageLayoutProps {
 	eyebrow: string;
@@ -21,19 +21,36 @@ export function PageLayout({
 	subtitle,
 	children,
 	backLink,
-	className = '',
+	className,
 }: PageLayoutProps) {
 	return (
-		<main className={`page-layout ${className}`.trim()}>
-			<div className='page-layout__intro'>
+		<Box
+			component='main'
+			className={className}
+			sx={(theme) => ({
+				maxWidth: 1200,
+				width: '100%',
+				mx: 'auto',
+				minHeight: '100vh',
+				px: { xs: 2.5, md: 8 },
+				py: { xs: 3, md: 4, lg: 6 },
+				backgroundColor: theme.palette.background.default,
+			})}
+		>
+			<Stack
+				spacing={3}
+				sx={{
+					mb: 3,
+				}}
+			>
 				<PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
 				{backLink ? (
 					<PageBackLink to={backLink.to} label={backLink.label} />
 				) : null}
-			</div>
+			</Stack>
 
-			<div className='page-layout__content'>{children}</div>
-		</main>
+			<Stack spacing={3}>{children}</Stack>
+		</Box>
 	);
 }

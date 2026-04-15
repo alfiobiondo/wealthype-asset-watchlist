@@ -1,5 +1,5 @@
+import { Box, Button } from '@mui/material';
 import type { AssetType } from '../../features/assets/types';
-import './CategoryFilter.css';
 
 interface CategoryFilterProps {
 	categories: AssetType[];
@@ -12,38 +12,49 @@ export function CategoryFilter({
 	selectedCategory,
 	onSelectCategory,
 }: CategoryFilterProps) {
+	function isActive(category: AssetType | 'all') {
+		return selectedCategory === category;
+	}
+
 	return (
-		<div
-			className='category-filter'
+		<Box
 			role='group'
 			aria-label='Filter assets by category'
+			sx={{
+				display: 'flex',
+				flexWrap: 'wrap',
+				gap: 1.5,
+			}}
 		>
-			<button
+			<Button
 				type='button'
-				className={`category-filter__button ${
-					selectedCategory === 'all' ? 'category-filter__button--active' : ''
-				}`}
+				variant={isActive('all') ? 'soft' : 'outlined'}
 				onClick={() => onSelectCategory('all')}
-				aria-pressed={selectedCategory === 'all'}
+				aria-pressed={isActive('all')}
+				sx={(theme) => ({
+					minHeight: 40,
+					borderRadius: theme.tokens.radius.pill,
+				})}
 			>
 				All
-			</button>
+			</Button>
 
 			{categories.map((category) => (
-				<button
+				<Button
 					key={category}
 					type='button'
-					className={`category-filter__button ${
-						selectedCategory === category
-							? 'category-filter__button--active'
-							: ''
-					}`}
+					variant={isActive(category) ? 'soft' : 'outlined'}
 					onClick={() => onSelectCategory(category)}
-					aria-pressed={selectedCategory === category}
+					aria-pressed={isActive(category)}
+					sx={(theme) => ({
+						minHeight: 40,
+						borderRadius: theme.tokens.radius.pill,
+						textTransform: 'capitalize',
+					})}
 				>
 					{category}
-				</button>
+				</Button>
 			))}
-		</div>
+		</Box>
 	);
 }

@@ -1,10 +1,10 @@
+import { CircularProgress } from '@mui/material';
 import { AssetCard } from '../../components/AssetCard/AssetCard';
 import { AssetCardSkeleton } from '../../components/AssetCardSkeleton/AssetCardSkeleton';
 import { EmptyState } from '../../components/EmptyState/EmptyState';
 import { ErrorState } from '../../components/ErrorState/ErrorState';
 import { FiltersBar } from '../../components/FiltersBar/FiltersBar';
 import { PageHeader } from '../../components/PageHeader/PageHeader';
-import { Spinner } from '../../components/Spinner/Spinner';
 import { useAssetFilters } from '../../features/assetFilters/hooks/useAssetFilters';
 import { useAssetCategories } from '../../features/assets/hooks/useAssetCategories';
 import { useAssets } from '../../features/assets/hooks/useAssets';
@@ -85,7 +85,13 @@ export function DashboardPage() {
 				}`}
 				aria-live='polite'
 			>
-				<Spinner />
+				<CircularProgress
+					enableTrackSlot
+					size={24}
+					thickness={5.5}
+					aria-label='Loading…'
+					sx={(theme) => ({ color: theme.palette.brand.accentText })}
+				/>
 				<span>Searching assets...</span>
 			</div>
 

@@ -1,10 +1,10 @@
 import { AssetCard } from '../../components/AssetCard/AssetCard';
 import { EmptyState } from '../../components/EmptyState/EmptyState';
-import { Spinner } from '../../components/Spinner/Spinner';
 import { ErrorState } from '../../components/ErrorState/ErrorState';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
 import './SavedAssetsPage.css';
 import { SavedAssetsLayout } from '../../layouts/SavedAssetsLayout/SavedAssetsLayout';
+import { CircularProgress } from '@mui/material';
 
 export function SavedAssetsPage() {
 	const { watchlistAssets, isLoading, error, isInWatchlist, toggleWatchlist } =
@@ -13,7 +13,13 @@ export function SavedAssetsPage() {
 	if (isLoading) {
 		return (
 			<SavedAssetsLayout>
-				<Spinner />
+				<CircularProgress
+					enableTrackSlot
+					size={24}
+					thickness={5.5}
+					aria-label='Loading…'
+					sx={(theme) => ({ color: theme.palette.brand.accentText })}
+				/>
 			</SavedAssetsLayout>
 		);
 	}

@@ -93,6 +93,68 @@ declare module '@mui/material/styles' {
 			ring: string;
 		};
 	}
+
+	interface Theme {
+		tokens: {
+			radius: {
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				pill: string;
+			};
+			spacing: {
+				xs: string;
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				'2xl': string;
+				'3xl': string;
+			};
+			shadows: {
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				floating: string;
+			};
+			gradients: {
+				brand: string;
+			};
+		};
+	}
+
+	interface ThemeOptions {
+		tokens?: {
+			radius?: {
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				pill: string;
+			};
+			spacing?: {
+				xs: string;
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				'2xl': string;
+				'3xl': string;
+			};
+			shadows?: {
+				sm: string;
+				md: string;
+				lg: string;
+				xl: string;
+				floating: string;
+			};
+			gradients?: {
+				brand: string;
+			};
+		};
+	}
 }
 
 declare module '@mui/material/Button' {
