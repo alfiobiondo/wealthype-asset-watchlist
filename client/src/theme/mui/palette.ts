@@ -48,5 +48,8 @@ export function getPalette(mode: ThemeMode): PaletteOptions {
 		focus: {
 			...colors.focus,
 		},
+		skeleton: {
+			...colors.skeleton,
+		},
 	};
 }

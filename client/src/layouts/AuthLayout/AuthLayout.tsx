@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
 import { Box, Paper, Stack, Typography } from '@mui/material';
-import './AuthLayout.css';
 
 interface AuthLayoutProps {
 	title: string;
@@ -11,24 +10,41 @@ interface AuthLayoutProps {
 export function AuthLayout({ title, subtitle, card }: AuthLayoutProps) {
 	return (
 		<Box
-			className='auth-page'
-			sx={{
-				backgroundColor: 'background.default',
-			}}
+			sx={(theme) => ({
+				minHeight: '100vh',
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				px: { xs: 3, md: 4 },
+				py: { xs: 3, md: 4 },
+				backgroundColor: theme.palette.background.default,
+			})}
 		>
-			<Box className='auth-page__shell'>
-				<Stack
-					direction='row'
-					spacing={3}
-					className='auth-page__brand'
-					sx={{
-						alignItems: 'flex-start',
-					}}
-				>
+			<Box
+				sx={{
+					width: '100%',
+					maxWidth: 1100,
+					display: 'grid',
+					gridTemplateColumns: {
+						xs: '1fr',
+						md: 'minmax(0, 1.1fr) minmax(420px, 0.9fr)',
+					},
+					gap: { xs: 3, md: 4 },
+					alignItems: 'center',
+				}}
+			>
+				<Stack direction='row' spacing={3} sx={{ alignItems: 'flex-start' }}>
 					<Box
-						className='auth-page__brand-mark'
 						sx={(theme) => ({
-							borderRadius: theme.tokens.radius.lg,
+							width: 72,
+							height: 72,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							fontSize: 26,
+							fontWeight: 700,
+							flexShrink: 0,
+							borderRadius: theme.tokens.radius.surface,
 							background: theme.tokens.gradients.brand,
 							color: theme.palette.brand.contrast,
 						})}
@@ -41,11 +57,7 @@ export function AuthLayout({ title, subtitle, card }: AuthLayoutProps) {
 							Wealthype
 						</Typography>
 
-						<Typography
-							variant='title'
-							component='h1'
-							sx={{ color: 'text.primary' }}
-						>
+						<Typography variant='title' component='h1'>
 							{title}
 						</Typography>
 
@@ -58,7 +70,7 @@ export function AuthLayout({ title, subtitle, card }: AuthLayoutProps) {
 				<Paper
 					elevation={0}
 					sx={(theme) => ({
-						p: 4,
+						p: { xs: 3, md: 4 },
 						display: 'flex',
 						flexDirection: 'column',
 						gap: 3,

@@ -1,16 +1,15 @@
-import { CircularProgress } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { AssetCard } from '../../components/AssetCard/AssetCard';
 import { AssetCardSkeleton } from '../../components/AssetCardSkeleton/AssetCardSkeleton';
 import { EmptyState } from '../../components/EmptyState/EmptyState';
 import { ErrorState } from '../../components/ErrorState/ErrorState';
 import { FiltersBar } from '../../components/FiltersBar/FiltersBar';
-import { PageHeader } from '../../components/PageHeader/PageHeader';
+import { PageLayout } from '../../layouts/PageLayout/PageLayout';
 import { useAssetFilters } from '../../features/assetFilters/hooks/useAssetFilters';
 import { useAssetCategories } from '../../features/assets/hooks/useAssetCategories';
 import { useAssets } from '../../features/assets/hooks/useAssets';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
 import { useDebouncedValue } from '../../lib/useDebouncedValue';
-import './DashboardPage.css';
 
 export function DashboardPage() {
 	const {
@@ -22,7 +21,7 @@ export function DashboardPage() {
 	} = useAssetFilters();
 
 	const debouncedSearchValue = useDebouncedValue(searchValue, 400);
-	const { isInWatchlist, toggleWatchlist } = useWatchlist();
+	const { isInWatchlist, toggleWatchlist, isPending } = useWatchlist();
 
 	const {
 		data: categories = [],
@@ -51,39 +50,43 @@ export function DashboardPage() {
 	const showAssets = !isAssetsLoading && !isError && assets.length > 0;
 
 	return (
-		<main className='dashboard-page'>
-			<header className='dashboard-page__header'>
-				<PageHeader
-					eyebrow='Wealthype'
-					title='Your watchlist'
-					subtitle='Search, filter and track your favorite assets.'
-				/>
+		<PageLayout
+			eyebrow='Wealthype'
+			title='Your watchlist'
+			subtitle='Search, filter and track your favorite assets.'
+		>
+			<FiltersBar
+				searchValue={searchValue}
+				onSearchChange={setSearchValue}
+				categories={categories}
+				selectedCategory={selectedCategory}
+				onCategoryChange={setSelectedCategory}
+				onReset={resetFilters}
+				showReset={hasActiveFilters}
+				resultsCount={!isInitialLoading && !isError ? assets.length : undefined}
+			/>
 
-				<FiltersBar
-					searchValue={searchValue}
-					onSearchChange={setSearchValue}
-					categories={categories}
-					selectedCategory={selectedCategory}
-					onCategoryChange={setSelectedCategory}
-					onReset={resetFilters}
-					showReset={hasActiveFilters}
-					resultsCount={
-						!isInitialLoading && !isError ? assets.length : undefined
-					}
-				/>
-			</header>
-
-			{isCategoriesError && (
-				<p role='status'>
+			{isCategoriesError ? (
+				<Typography
+					role='status'
+					variant='body2'
+					sx={{ color: 'text.secondary' }}
+				>
 					Unable to load asset categories. Search is still available.
-				</p>
-			)}
+				</Typography>
+			) : null}
 
-			<div
-				className={`dashboard-page__searching ${
-					showSearchingState ? 'dashboard-page__searching--visible' : ''
-				}`}
+			<Box
 				aria-live='polite'
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					gap: 1,
+					minHeight: 32,
+					visibility: showSearchingState ? 'visible' : 'hidden',
+					opacity: showSearchingState ? 1 : 0,
+					transition: 'opacity 0.2s ease',
+				}}
 			>
 				<CircularProgress
 					enableTrackSlot
@@ -92,26 +95,36 @@ export function DashboardPage() {
 					aria-label='Loading…'
 					sx={(theme) => ({ color: theme.palette.brand.accentText })}
 				/>
-				<span>Searching assets...</span>
-			</div>
+				<Typography variant='body2' color='text.secondary'>
+					Searching assets...
+				</Typography>
+			</Box>
 
-			{isInitialLoading && (
-				<section className='dashboard-page__grid' aria-label='Loading assets'>
+			{isInitialLoading ? (
+				<Box
+					component='section'
+					aria-label='Loading assets'
+					sx={{
+						display: 'grid',
+						gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+						gap: 2.5,
+					}}
+				>
 					{Array.from({ length: 6 }).map((_, index) => (
 						<AssetCardSkeleton key={index} />
 					))}
-				</section>
-			)}
+				</Box>
+			) : null}
 
-			{isError && (
+			{isError ? (
 				<ErrorState
 					title='Something went wrong'
 					description={error instanceof Error ? error.message : 'Unknown error'}
 					onRetry={refetch}
 				/>
-			)}
+			) : null}
 
-			{showEmptyState && (
+			{showEmptyState ? (
 				<EmptyState
 					title='No assets found'
 					description={
@@ -121,24 +134,42 @@ export function DashboardPage() {
 					}
 					action={
 						hasActiveFilters ? (
-							<button onClick={resetFilters}>Reset filters</button>
+							<Button
+								type='button'
+								variant='outlined'
+								onClick={resetFilters}
+								sx={(theme) => ({
+									borderRadius: theme.tokens.radius.pill,
+								})}
+							>
+								Reset filters
+							</Button>
 						) : undefined
 					}
 				/>
-			)}
+			) : null}
 
-			{showAssets && (
-				<section className='dashboard-page__grid' aria-label='Assets list'>
+			{showAssets ? (
+				<Box
+					component='section'
+					aria-label='Assets list'
+					sx={{
+						display: 'grid',
+						gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+						gap: 2.5,
+					}}
+				>
 					{assets.map((asset) => (
 						<AssetCard
 							key={asset.id}
 							asset={asset}
 							isInWatchlist={isInWatchlist(asset.id)}
+							isPending={isPending}
 							onToggleWatchlist={() => toggleWatchlist(asset.id)}
 						/>
 					))}
-				</section>
-			)}
-		</main>
+				</Box>
+			) : null}
+		</PageLayout>
 	);
 }

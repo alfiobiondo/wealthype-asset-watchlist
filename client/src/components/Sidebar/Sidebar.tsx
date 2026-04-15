@@ -17,9 +17,6 @@ interface SidebarProps {
 	isOpen: boolean;
 }
 
-const SIDEBAR_WIDTH_OPEN = 280;
-const SIDEBAR_WIDTH_CLOSED = 92;
-
 export function Sidebar({ isOpen }: SidebarProps) {
 	const { watchlistAssets } = useWatchlist();
 	const { logout } = useAuth();
@@ -47,8 +44,8 @@ export function Sidebar({ isOpen }: SidebarProps) {
 				width: isMobile
 					? '100%'
 					: isOpen
-					? SIDEBAR_WIDTH_OPEN
-					: SIDEBAR_WIDTH_CLOSED,
+					? theme.tokens.layout.sidebar.openWidth
+					: theme.tokens.layout.sidebar.closedWidth,
 				minHeight: isMobile ? 'auto' : '100vh',
 				px: isMobile ? 2 : isOpen ? 2 : 1.5,
 				py: isMobile ? 2 : 2.5,

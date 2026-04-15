@@ -13,7 +13,7 @@ export function ErrorState({ title, description, onRetry }: ErrorStateProps) {
 			sx={(theme) => ({
 				p: 3,
 				border: `1px solid ${theme.palette.feedback.dangerBorder}`,
-				borderRadius: theme.tokens.radius.md,
+				borderRadius: theme.tokens.radius.interactive,
 				backgroundColor: theme.palette.feedback.dangerSoft,
 				textAlign: 'left',
 			})}
@@ -47,7 +47,6 @@ export function ErrorState({ title, description, onRetry }: ErrorStateProps) {
 					variant='outlined'
 					onClick={onRetry}
 					sx={(theme) => ({
-						minHeight: 40,
 						borderRadius: theme.tokens.radius.pill,
 						borderColor: theme.palette.border.dangerSoft,
 						backgroundColor: theme.palette.background.paper,

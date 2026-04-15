@@ -3,7 +3,7 @@ import type { Components, Theme } from '@mui/material/styles';
 export const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
 	styleOverrides: {
 		root: ({ theme }) => ({
-			borderRadius: theme.shape.borderRadius,
+			borderRadius: theme.tokens.radius.interactive,
 			backgroundColor: theme.palette.background.paper,
 			color: theme.palette.text.primary,
 			transition:
@@ -18,7 +18,7 @@ export const MuiOutlinedInput: Components<Theme>['MuiOutlinedInput'] = {
 			},
 
 			'&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-				borderColor: theme.palette.primary.main,
+				borderColor: theme.palette.brand.accent,
 				borderWidth: 1,
 			},
 

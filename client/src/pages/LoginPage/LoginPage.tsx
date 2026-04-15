@@ -94,7 +94,11 @@ export function LoginPage() {
 							fullWidth
 						>
 							{isLoading ? (
-								<Box className='auth-card__submit-content'>
+								<Stack
+									direction='row'
+									spacing={1}
+									sx={{ alignItems: 'center', justifyContent: 'center' }}
+								>
 									<CircularProgress
 										enableTrackSlot
 										size={24}
@@ -103,7 +107,7 @@ export function LoginPage() {
 										sx={(theme) => ({ color: theme.palette.brand.accentText })}
 									/>
 									<span>Logging in...</span>
-								</Box>
+								</Stack>
 							) : (
 								'Log in'
 							)}

@@ -28,7 +28,7 @@ export function PageLayout({
 			component='main'
 			className={className}
 			sx={(theme) => ({
-				maxWidth: 1200,
+				maxWidth: theme.tokens.layout.pageMaxWidth,
 				width: '100%',
 				mx: 'auto',
 				minHeight: '100vh',

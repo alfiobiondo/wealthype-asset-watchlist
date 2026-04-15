@@ -1,25 +1,42 @@
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { AssetCard } from '../../components/AssetCard/AssetCard';
 import { EmptyState } from '../../components/EmptyState/EmptyState';
 import { ErrorState } from '../../components/ErrorState/ErrorState';
 import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
-import './SavedAssetsPage.css';
 import { SavedAssetsLayout } from '../../layouts/SavedAssetsLayout/SavedAssetsLayout';
-import { CircularProgress } from '@mui/material';
 
 export function SavedAssetsPage() {
-	const { watchlistAssets, isLoading, error, isInWatchlist, toggleWatchlist } =
-		useWatchlist();
+	const {
+		watchlistAssets,
+		isLoading,
+		error,
+		isInWatchlist,
+		toggleWatchlist,
+		isPending,
+	} = useWatchlist();
 
 	if (isLoading) {
 		return (
 			<SavedAssetsLayout>
-				<CircularProgress
-					enableTrackSlot
-					size={24}
-					thickness={5.5}
-					aria-label='Loading…'
-					sx={(theme) => ({ color: theme.palette.brand.accentText })}
-				/>
+				<Box
+					aria-live='polite'
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: 1.25,
+					}}
+				>
+					<CircularProgress
+						enableTrackSlot
+						size={24}
+						thickness={5.5}
+						aria-label='Loading…'
+						sx={(theme) => ({ color: theme.palette.brand.accentText })}
+					/>
+					<Typography variant='body2' color='text.secondary'>
+						Loading saved assets...
+					</Typography>
+				</Box>
 			</SavedAssetsLayout>
 		);
 	}
@@ -39,12 +56,24 @@ export function SavedAssetsPage() {
 
 	return (
 		<SavedAssetsLayout>
-			<div className='saved-assets-page__summary'>
-				<span className='saved-assets-page__count'>
+			<Box sx={{ mb: 3 }}>
+				<Typography
+					variant='body2'
+					sx={(theme) => ({
+						display: 'inline-flex',
+						alignItems: 'center',
+						minHeight: 40,
+						px: 2,
+						borderRadius: theme.tokens.radius.pill,
+						backgroundColor: theme.palette.surface.secondary,
+						fontWeight: 600,
+						color: 'text.secondary',
+					})}
+				>
 					{watchlistAssets.length}{' '}
 					{watchlistAssets.length === 1 ? 'asset' : 'assets'} saved
-				</span>
-			</div>
+				</Typography>
+			</Box>
 
 			{watchlistAssets.length === 0 ? (
 				<EmptyState
@@ -52,16 +81,23 @@ export function SavedAssetsPage() {
 					description='Add assets from the dashboard to keep track of them here.'
 				/>
 			) : (
-				<div className='saved-assets-page__grid'>
+				<Box
+					sx={{
+						display: 'grid',
+						gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+						gap: 3,
+					}}
+				>
 					{watchlistAssets.map((asset) => (
 						<AssetCard
 							key={asset.id}
 							asset={asset}
 							isInWatchlist={isInWatchlist(asset.id)}
+							isPending={isPending}
 							onToggleWatchlist={() => toggleWatchlist(asset.id)}
 						/>
 					))}
-				</div>
+				</Box>
 			)}
 		</SavedAssetsLayout>
 	);

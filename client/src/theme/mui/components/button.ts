@@ -7,8 +7,8 @@ export const MuiButton: Components<Theme>['MuiButton'] = {
 	},
 	styleOverrides: {
 		root: ({ theme }) => ({
-			borderRadius: theme.shape.borderRadius,
-			minHeight: 52,
+			borderRadius: theme.tokens.radius.interactive,
+			minHeight: 40,
 			paddingInline: theme.spacing(2),
 			fontSize: '1rem',
 			fontWeight: 700,
@@ -35,18 +35,18 @@ export const MuiButton: Components<Theme>['MuiButton'] = {
 		outlined: ({ theme }) => ({
 			borderWidth: 1,
 			borderStyle: 'solid',
-			borderColor: theme.palette.divider,
+			borderColor: theme.palette.border.default,
 			backgroundColor: theme.palette.background.paper,
 			color: theme.palette.text.primary,
 			'&:hover': {
-				borderColor: theme.palette.text.primary,
-				backgroundColor: theme.palette.action.hover,
+				borderColor: theme.palette.border.strong,
+				backgroundColor: theme.palette.surface.secondary,
 			},
 		}),
 		text: ({ theme }) => ({
 			color: theme.palette.primary.main,
 			'&:hover': {
-				backgroundColor: theme.palette.action.hover,
+				backgroundColor: theme.palette.surface.secondary,
 			},
 		}),
 	},

@@ -32,7 +32,7 @@ export function EmptyState({ title, description, action }: EmptyStateProps) {
 				{title}
 			</Typography>
 
-			<Typography variant='body2' color='text.secondary'>
+			<Typography variant='body2' sx={{ color: 'text.secondary' }}>
 				{description}
 			</Typography>
 

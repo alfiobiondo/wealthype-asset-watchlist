@@ -46,6 +46,10 @@ declare module '@mui/material/styles' {
 		focus: {
 			ring: string;
 		};
+		skeleton: {
+			base: string;
+			highlight: string;
+		};
 	}
 
 	interface PaletteOptions {
@@ -92,6 +96,10 @@ declare module '@mui/material/styles' {
 		focus?: {
 			ring: string;
 		};
+		skeleton: {
+			base: string;
+			highlight: string;
+		};
 	}
 
 	interface Theme {
@@ -102,6 +110,8 @@ declare module '@mui/material/styles' {
 				lg: string;
 				xl: string;
 				pill: string;
+				interactive: string;
+				surface: string;
 			};
 			spacing: {
 				xs: string;
@@ -122,6 +132,13 @@ declare module '@mui/material/styles' {
 			gradients: {
 				brand: string;
 			};
+			layout: {
+				pageMaxWidth: number;
+				sidebar: {
+					openWidth: number;
+					closedWidth: number;
+				};
+			};
 		};
 	}
 
@@ -133,6 +150,8 @@ declare module '@mui/material/styles' {
 				lg: string;
 				xl: string;
 				pill: string;
+				interactive: string;
+				surface: string;
 			};
 			spacing?: {
 				xs: string;
@@ -152,6 +171,13 @@ declare module '@mui/material/styles' {
 			};
 			gradients?: {
 				brand: string;
+			};
+			layout?: {
+				pageMaxWidth: number;
+				sidebar: {
+					openWidth: number;
+					closedWidth: number;
+				};
 			};
 		};
 	}

@@ -30,7 +30,7 @@ export async function fetchAssets({
 	}
 
 	const response = await apiClient(
-		`${ENV.API_BASE_URL}/api/asset?${params.toString()}`,
+		`${ENV.API_BASE_URL}/api/assets?${params.toString()}`,
 		{
 			signal,
 		}

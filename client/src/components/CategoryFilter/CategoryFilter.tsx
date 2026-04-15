@@ -32,7 +32,6 @@ export function CategoryFilter({
 				onClick={() => onSelectCategory('all')}
 				aria-pressed={isActive('all')}
 				sx={(theme) => ({
-					minHeight: 40,
 					borderRadius: theme.tokens.radius.pill,
 				})}
 			>
@@ -47,7 +46,6 @@ export function CategoryFilter({
 					onClick={() => onSelectCategory(category)}
 					aria-pressed={isActive(category)}
 					sx={(theme) => ({
-						minHeight: 40,
 						borderRadius: theme.tokens.radius.pill,
 						textTransform: 'capitalize',
 					})}

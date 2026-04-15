@@ -19,7 +19,7 @@ export function createAppMuiTheme(mode: ThemeMode) {
 	return createTheme({
 		palette: getPalette(mode),
 		shape: {
-			borderRadius: pxToNumber(radius.md),
+			borderRadius: pxToNumber(radius.interactive),
 		},
 		spacing: pxToNumber(spacing.sm),
 		shadows: getMuiShadows(),
@@ -31,6 +31,13 @@ export function createAppMuiTheme(mode: ThemeMode) {
 			shadows,
 			gradients: {
 				brand: colors.gradient.brand,
+			},
+			layout: {
+				pageMaxWidth: 1200,
+				sidebar: {
+					openWidth: 280,
+					closedWidth: 92,
+				},
 			},
 		},
 	});

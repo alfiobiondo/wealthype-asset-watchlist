@@ -1,4 +1,5 @@
 import { Box, Button, Link, Stack } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 import { NavLink } from 'react-router-dom';
 
 interface SidebarItemContentProps {
@@ -44,6 +45,8 @@ function SidebarItemContent({
 					<Box
 						component='span'
 						sx={{
+							display: 'contents',
+							alignItems: 'center',
 							whiteSpace: 'nowrap',
 							overflow: 'hidden',
 							textOverflow: 'ellipsis',
@@ -80,8 +83,8 @@ function SidebarItemContent({
 	);
 }
 
-function getBaseItemStyles(isOpen: boolean, isActive?: boolean) {
-	return (theme: any) => ({
+function getBaseItemStyles(isOpen: boolean, isActive = false) {
+	return (theme: Theme) => ({
 		display: 'inline-flex',
 		alignItems: 'center',
 		gap: 1.5,
@@ -89,12 +92,12 @@ function getBaseItemStyles(isOpen: boolean, isActive?: boolean) {
 		width: '100%',
 		px: isOpen ? 1.5 : 0,
 		justifyContent: isOpen ? 'flex-start' : 'center',
-		borderRadius: theme.tokens.radius.md,
+		borderRadius: theme.tokens.radius.interactive,
 		fontWeight: 600,
 		transition: 'background-color 0.2s ease, color 0.2s ease',
 		color: isActive
 			? theme.palette.brand.accentText
-			: theme.palette.text.tertiary,
+			: theme.palette.text.primary,
 		backgroundColor: isActive ? theme.palette.brand.accentSoft : 'transparent',
 		'&:hover': {
 			backgroundColor: isActive

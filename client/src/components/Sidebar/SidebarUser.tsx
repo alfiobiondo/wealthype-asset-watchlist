@@ -68,7 +68,7 @@ export function SidebarUser({
 							variant='text'
 							width={120}
 							sx={{
-								fontSize: '0.95rem',
+								fontSize: '0.8rem',
 								transform: 'none',
 							}}
 						/>

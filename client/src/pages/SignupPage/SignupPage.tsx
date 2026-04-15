@@ -122,7 +122,11 @@ export function SignupPage() {
 							fullWidth
 						>
 							{isLoading ? (
-								<Box className='auth-card__submit-content'>
+								<Stack
+									direction='row'
+									spacing={1}
+									sx={{ alignItems: 'center', justifyContent: 'center' }}
+								>
 									<CircularProgress
 										enableTrackSlot
 										size={24}
@@ -131,7 +135,7 @@ export function SignupPage() {
 										sx={(theme) => ({ color: theme.palette.brand.accentText })}
 									/>
 									<span>Creating account...</span>
-								</Box>
+								</Stack>
 							) : (
 								'Create account'
 							)}

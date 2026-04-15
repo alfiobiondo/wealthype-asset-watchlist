@@ -34,7 +34,7 @@ export function FiltersBar({
 				display: 'flex',
 				flexDirection: 'column',
 				border: `1px solid ${theme.palette.border.default}`,
-				borderRadius: theme.tokens.radius.lg,
+				borderRadius: theme.tokens.radius.surface,
 				boxShadow: theme.tokens.shadows.sm,
 				gap: theme.tokens.spacing.lg,
 				backgroundColor: theme.palette.background.paper,

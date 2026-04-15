@@ -2,11 +2,11 @@ import { Box, Button, Paper, Stack, Typography, Chip } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import type { Asset } from '../../features/assets/types';
 import { formatCurrency, formatPercentage } from '../../lib/formatters';
-import { useWatchlist } from '../../features/watchlist/hooks/useWatchlist';
 
 interface AssetCardProps {
 	asset: Asset;
 	isInWatchlist: boolean;
+	isPending: boolean;
 	onToggleWatchlist: () => void;
 }
 
@@ -14,8 +14,8 @@ export function AssetCard({
 	asset,
 	isInWatchlist,
 	onToggleWatchlist,
+	isPending,
 }: AssetCardProps) {
-	const { isPending } = useWatchlist();
 	const isPositive = asset.changePercent >= 0;
 
 	return (
@@ -29,7 +29,7 @@ export function AssetCard({
 				justifyContent: 'space-between',
 				p: 2,
 				border: `1px solid ${theme.palette.border.default}`,
-				borderRadius: theme.tokens.radius.lg,
+				borderRadius: theme.tokens.radius.surface,
 				boxShadow: theme.tokens.shadows.sm,
 				backgroundColor: theme.palette.background.paper,
 				transition:
