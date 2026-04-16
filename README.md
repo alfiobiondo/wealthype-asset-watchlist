@@ -1,17 +1,25 @@
 # Assetly
 
-Assetly is a full-stack asset watchlist application built to explore a modern product workflow across frontend and backend development. It allows users to create an account, sign in securely, browse financial assets, and manage a protected personal watchlist.
+Assetly is a full-stack asset watchlist application built as a portfolio project from an initial technical exercise. It combines a React frontend with an Express API, persistent PostgreSQL storage, and authentication-protected user flows for saving and tracking assets.
 
-The project began as a technical assessment and evolved into a personal portfolio project focused on clean architecture, strong typing, and a polished full-stack developer experience.
+## Why this project exists
+
+This project was built to demonstrate a complete full-stack workflow, including
+API design, authentication, database persistence, and real-world deployment
+across multiple services.
 
 ## Overview
 
-Assetly combines a React single-page application with an Express API and a PostgreSQL database. The frontend is designed for responsive, state-driven UI flows, while the backend handles authentication, validation, and watchlist persistence.
+The application lets users create an account, sign in, browse available assets, and manage a personal watchlist. The frontend focuses on responsive UI, client-side routing, and async data handling, while the backend provides authentication, validation, and database persistence.
 
-This repository is organized as two applications:
+## Features
 
-- `client/` for the React frontend
-- `server/` for the Express API and Prisma data layer
+- User signup and login with JWT authentication
+- Protected watchlist tied to the authenticated user
+- Asset list with dedicated API-backed data fetching
+- Add and remove assets from the watchlist
+- Full-stack TypeScript architecture
+- Deployment-ready frontend and backend configuration
 
 ## Tech Stack
 
@@ -33,21 +41,16 @@ This repository is organized as two applications:
 - JWT authentication
 - Zod validation
 
-## Features
+### Deployment
 
-- User signup and login
-- JWT-based authentication
-- Protected watchlist routes and user-specific data
-- Asset listing with a dedicated frontend data layer
-- Add assets to watchlist
-- Remove assets from watchlist
-- Full-stack TypeScript architecture
+- Frontend: Vercel
+- Backend: Render
+- Database: Supabase Postgres
 
-## App Architecture
+The application is fully deployed and accessible via the links below.
+The frontend communicates with the backend through a configured environment variable (VITE_API_URL).
 
-### Frontend
-
-The frontend follows a feature-oriented structure inside `client/src/`, separating shared UI, layouts, app wiring, and domain logic.
+## Architecture
 
 ```text
 client/
@@ -57,22 +60,11 @@ client/
 │   ├── components/
 │   ├── config/
 │   ├── features/
-│   │   ├── assets/
-│   │   ├── auth/
-│   │   ├── assetFilters/
-│   │   └── watchlist/
 │   ├── layouts/
 │   ├── lib/
 │   ├── pages/
 │   └── theme/
-└── package.json
-```
 
-### Backend
-
-The backend is split into routes, services, middleware, schemas, and Prisma models to keep request handling, business logic, and validation clearly separated.
-
-```text
 server/
 ├── prisma/
 │   ├── schema.prisma
@@ -86,21 +78,22 @@ server/
 │   ├── types/
 │   ├── app.ts
 │   └── server.ts
-└── package.json
 ```
+
+The frontend communicates with the backend via REST APIs.
+The backend handles authentication, validation, and database access using Prisma.
+The database is hosted on Supabase and accessed through a connection pooler in production.
 
 ## Local Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_REPOSITORY_URL>
-cd <YOUR_PROJECT_DIRECTORY>
+git clone <REPOSITORY_URL>
+cd <PROJECT_DIRECTORY>
 ```
 
 ### 2. Install dependencies
-
-Install dependencies in both applications:
 
 ```bash
 cd client && npm install
@@ -109,100 +102,90 @@ cd ../server && npm install
 
 ### 3. Configure environment variables
 
-Create local env files from the examples and fill in your values.
-
-Frontend:
-
 ```bash
 cp client/.env.example client/.env
-```
-
-Backend:
-
-```bash
 cp server/.env.example server/.env
 ```
 
 ### 4. Prepare the database
 
-Make sure PostgreSQL is running and your `DATABASE_URL` points to a valid database.
-
-Then run Prisma commands from the `server/` directory:
+From `server/`:
 
 ```bash
 npx prisma migrate dev
 npx prisma db seed
 ```
 
-### 5. Start the apps
+### 5. Run the application
 
-In one terminal:
+Backend:
 
 ```bash
 cd server
 npm run dev
 ```
 
-In another terminal:
+Frontend:
 
 ```bash
 cd client
 npm run dev
 ```
 
-The frontend expects the API base URL configured through the frontend env file.
-
 ## Environment Variables
 
 ### Frontend
 
-Defined in `client/.env`:
+`client/.env`
 
 ```env
-VITE_API_BASE_URL=http://localhost:3001
+VITE_API_URL=
 ```
 
 ### Backend
 
-Defined in `server/.env`:
+`server/.env`
 
 ```env
-DATABASE_URL=postgresql://<username>:<password>@<host>:<port>/<database>
-JWT_SECRET=<your_jwt_secret>
-PORT=3001
+DATABASE_URL=
+DIRECT_URL=
+JWT_SECRET=
+PORT=
+CORS_ORIGIN=
 ```
 
-## Available Scripts
+## Deployment Links
 
-### Frontend (`client/package.json`)
+- Frontend (Vercel): <https://assetly-swart.vercel.app/>
+- Backend (Render): <https://assetly-3hdd.onrender.com>
+- Database: Supabase (PostgreSQL)
 
-- `npm run dev` starts the Vite development server
-- `npm run build` creates a production build
-- `npm run lint` runs ESLint
-- `npm run preview` previews the production build locally
+## Screenshots
 
-### Backend (`server/package.json`)
+### Signup / Login
 
-- `npm run dev` starts the Express API in development mode
-- `npm run build` compiles the backend with TypeScript
-- `npm run start` runs the compiled backend from `dist`
-- `npx prisma migrate dev` runs local database migrations
-- `npx prisma db seed` seeds the database
+![Signup](./screenshots/login.png)
+
+### Dashboard
+
+![Dashboard](./screenshots/dashboard.png)
+
+### Watchlist
+
+![Watchlist](./screenshots/watchlist.png)
+
+## Key Learnings
+
+- Managing environment variables across multiple deployment platforms
+- Handling CORS and cross-origin communication between frontend and backend
+- Configuring Prisma with Supabase and connection pooling
+- Debugging real-world deployment issues (CORS, networking, migrations)
 
 ## Future Improvements
 
-- Add automated tests across frontend and backend
-- Improve watchlist and asset filtering UX with pagination or sorting
-- Introduce refresh tokens or more advanced auth/session handling
-- Add deployment configuration for a production-ready setup
-- Expand asset metadata and portfolio-style tracking features
-- Add CI workflows for linting, type-checking, and builds
-
-## Portfolio Note
-
-Assetly started as an initial technical exercise and grew into a personal full-stack project. It now serves as a portfolio piece that reflects both implementation detail and broader architectural thinking across the frontend, API, and database layers.
-
-## Links
-
-- Repository: <https://github.com/tuo-username/assetly>
-- Live demo: deployment in progress
+- Add automated tests for frontend and backend
+- Improve filtering, sorting, and search UX
+- Add richer asset metadata and detail views
+- Introduce refresh tokens or more advanced session handling
+- Add CI for linting, type-checking, and deployment checks
+- Expand the product into broader portfolio tracking features
