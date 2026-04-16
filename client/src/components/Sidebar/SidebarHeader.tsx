@@ -1,4 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
+import { AssetlyLogo } from '../AssetlyLogo/AssetlyLogo';
 
 interface SidebarHeaderProps {
 	isOpen: boolean;
@@ -29,25 +30,7 @@ export function SidebarHeader({ isOpen, isMobile }: SidebarHeaderProps) {
 						: 'center',
 				}}
 			>
-				<Box
-					aria-hidden='true'
-					sx={(theme) => ({
-						display: 'inline-flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						width: 40,
-						height: 40,
-						borderRadius: theme.tokens.radius.sm,
-						background: theme.tokens.gradients.brand,
-						color: theme.palette.brand.contrast,
-						fontSize: '0.95rem',
-						fontWeight: 700,
-						letterSpacing: '-0.02em',
-						flexShrink: 0,
-					})}
-				>
-					W
-				</Box>
+				<AssetlyLogo size={40} alt='Assetly' />
 
 				{isOpen ? (
 					<Box sx={{ minWidth: 0 }}>
@@ -61,7 +44,7 @@ export function SidebarHeader({ isOpen, isMobile }: SidebarHeaderProps) {
 								whiteSpace: 'nowrap',
 							}}
 						>
-							Wealthype
+							Assetly
 						</Typography>
 
 						<Typography

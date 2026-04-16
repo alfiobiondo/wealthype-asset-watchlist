@@ -13,15 +13,13 @@ export const app = express();
 
 app.disable('x-powered-by');
 
-// Needed when deployed behind a reverse proxy / platform proxy.
-// Safe to enable conditionally.
 if (process.env.TRUST_PROXY === 'true') {
 	app.set('trust proxy', 1);
 }
 
 const allowedOrigins = [
 	'http://localhost:5173',
-	process.env.CLIENT_ORIGIN,
+	process.env.CORS_ORIGIN,
 ].filter(Boolean) as string[];
 
 app.use(helmet());
@@ -29,7 +27,6 @@ app.use(helmet());
 app.use(
 	cors({
 		origin(origin, callback) {
-			// Allow tools like curl/Postman and same-origin server-to-server calls
 			if (!origin) {
 				return callback(null, true);
 			}
@@ -40,7 +37,7 @@ app.use(
 
 			return callback(new Error('Origin not allowed by CORS'));
 		},
-	})
+	}),
 );
 
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));

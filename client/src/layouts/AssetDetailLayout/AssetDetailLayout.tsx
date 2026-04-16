@@ -8,7 +8,7 @@ interface AssetDetailLayoutProps {
 export function AssetDetailLayout({ children }: AssetDetailLayoutProps) {
 	return (
 		<PageLayout
-			eyebrow='Wealthype'
+			eyebrow='Assetly'
 			title='Asset details'
 			subtitle='View price, performance and additional information.'
 			backLink={{ to: '/', label: 'Back to dashboard' }}

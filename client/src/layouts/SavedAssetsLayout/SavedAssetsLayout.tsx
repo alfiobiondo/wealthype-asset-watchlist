@@ -8,7 +8,7 @@ interface SavedAssetsLayoutProps {
 export function SavedAssetsLayout({ children }: SavedAssetsLayoutProps) {
 	return (
 		<PageLayout
-			eyebrow='Wealthype'
+			eyebrow='Assetly'
 			title='Saved assets'
 			subtitle='Track the assets you added to your watchlist.'
 			backLink={{ to: '/', label: 'Back to dashboard' }}

@@ -1,5 +1,4 @@
 import type { Asset, AssetType } from '../types';
-import { ENV } from '../../../config/env';
 import { apiClient } from '../../../lib/apiClient';
 
 interface FetchAssetsParams {
@@ -29,12 +28,12 @@ export async function fetchAssets({
 		params.set('type', category);
 	}
 
-	const response = await apiClient(
-		`${ENV.API_BASE_URL}/api/assets?${params.toString()}`,
-		{
-			signal,
-		}
-	);
+	const queryString = params.toString();
+	const path = queryString ? `/api/assets?${queryString}` : '/api/assets';
+
+	const response = await apiClient(path, {
+		signal,
+	});
 
 	if (!response.ok) {
 		throw new Error('Failed to fetch assets');

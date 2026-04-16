@@ -1,5 +1,4 @@
 import type { Asset } from '../types';
-import { ENV } from '../../../config/env';
 import { apiClient } from '../../../lib/apiClient';
 
 interface FetchAssetByIdParams {
@@ -15,7 +14,7 @@ export async function fetchAssetById({
 	// 	throw new Error('Simulated asset detail error');
 	// }
 
-	const response = await apiClient(`${ENV.API_BASE_URL}/api/assets/${id}`, {
+	const response = await apiClient(`/api/assets/${id}`, {
 		signal,
 	});
 

@@ -1,5 +1,4 @@
 import type { AssetType } from '../types';
-import { ENV } from '../../../config/env';
 import { apiClient } from '../../../lib/apiClient';
 
 interface FetchAssetCategoriesParams {
@@ -9,7 +8,7 @@ interface FetchAssetCategoriesParams {
 export async function fetchAssetCategories({
 	signal,
 }: FetchAssetCategoriesParams = {}): Promise<AssetType[]> {
-	const response = await apiClient(`${ENV.API_BASE_URL}/api/asset-types`, {
+	const response = await apiClient('/api/asset-types', {
 		signal,
 	});
 

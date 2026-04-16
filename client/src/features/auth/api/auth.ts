@@ -1,4 +1,3 @@
-import { ENV } from '../../../config/env';
 import { apiClient } from '../../../lib/apiClient';
 
 export interface AuthUser {
@@ -30,7 +29,7 @@ export async function login(
 	email: string,
 	password: string
 ): Promise<AuthResponse> {
-	const response = await fetch(`${ENV.API_BASE_URL}/api/auth/login`, {
+	const response = await apiClient('/api/auth/login', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -51,7 +50,7 @@ export async function signup(
 	password: string,
 	name?: string
 ): Promise<AuthResponse> {
-	const response = await fetch(`${ENV.API_BASE_URL}/api/auth/signup`, {
+	const response = await apiClient('/api/auth/signup', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

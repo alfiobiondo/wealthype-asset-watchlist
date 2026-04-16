@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Box, Paper, Stack, Typography } from '@mui/material';
+import { AssetlyLogo } from '../../components/AssetlyLogo/AssetlyLogo';
 
 interface AuthLayoutProps {
 	title: string;
@@ -34,27 +35,11 @@ export function AuthLayout({ title, subtitle, card }: AuthLayoutProps) {
 				}}
 			>
 				<Stack direction='row' spacing={3} sx={{ alignItems: 'flex-start' }}>
-					<Box
-						sx={(theme) => ({
-							width: 72,
-							height: 72,
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							fontSize: 26,
-							fontWeight: 700,
-							flexShrink: 0,
-							borderRadius: theme.tokens.radius.surface,
-							background: theme.tokens.gradients.brand,
-							color: theme.palette.brand.contrast,
-						})}
-					>
-						W
-					</Box>
+					<AssetlyLogo size={72} alt='Assetly' />
 
 					<Stack spacing={1} sx={{ minWidth: 0, maxWidth: 520 }}>
 						<Typography variant='eyebrow' sx={{ color: 'text.secondary' }}>
-							Wealthype
+							Assetly
 						</Typography>
 
 						<Typography variant='title' component='h1'>

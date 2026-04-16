@@ -1,7 +1,7 @@
 import type { AssetType } from '../../assets/types';
 
-const SEARCH_SESSION_KEY = 'wealthype-search-value';
-const CATEGORY_SESSION_KEY = 'wealthype-selected-category';
+const SEARCH_SESSION_KEY = 'assetly-search-value';
+const CATEGORY_SESSION_KEY = 'assetly-selected-category';
 
 export function getStoredSearchValue(): string {
 	return sessionStorage.getItem(SEARCH_SESSION_KEY) ?? '';

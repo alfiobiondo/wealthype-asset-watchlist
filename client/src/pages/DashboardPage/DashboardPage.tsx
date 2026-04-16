@@ -51,7 +51,7 @@ export function DashboardPage() {
 
 	return (
 		<PageLayout
-			eyebrow='Wealthype'
+			eyebrow='Assetly'
 			title='Your watchlist'
 			subtitle='Search, filter and track your favorite assets.'
 		>
